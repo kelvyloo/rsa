@@ -1,26 +1,34 @@
+/**
+ * Encoder Class
+ * Takes the message that the user desires be encoded and can encode the message using RSA
+ * modular encryption.
+ *
+ * INSTANCE VARIABLES:
+ * Public variables
+ * @msg           Message to be encoded
+ * @public_key_n  A prime number n such that n = pq
+ * @public_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
+ *
+ * Private variables
+ * @digits_n         Length of the public key n
+ * @encoded_msg      Final encoded message after encryption
+ */
 public class Encoder {
-    /**
-     * INSTANCE VARIABLES:
-     * Public variables
-     * @msg           Message to be encoded
-     * @public_key_n  A prime number n such that n = pq
-     * @public_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
-     *
-     * Private variables
-     * @string_coded_msg Original message but with each letter replaced by its alphanumeric value
-     * @digits_n         Length of the public key n
-     * @encoded_msg      Final encoded message after encryption
-     */
     String msg;
     long public_key_n;
     long public_key_e;
 
-    private String string_coded_msg;
     private int digits_n = String.valueOf(public_key_n).length();
-    private long encoded_msg[] = new long[64];
+    private long encoded_msg[];
 
     /**
      * Class Constructor
+     *
+     * @msg           Message to be encoded
+     * @public_key_n  A prime number n such that n = pq
+     * @public_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
+     *
+     * @return        Nothing
      * */
     public Encoder(String msg, long public_key_n, long public_key_e)
     {
@@ -29,9 +37,18 @@ public class Encoder {
         this.public_key_e = public_key_e;
     }
 
-    public String letter_to_int()
+    /**
+     * Simple scheme to transform letters into their alphanumeric value (i.e. X = 23).
+     * Letters before the 10th letter K are padded with a zero in front (i.e. B = 01).
+     * This encoded message needs to be a length such msg.length % digits_n == 0
+     * so the string is padded with Xs
+     *
+     * @return the alphanumeric string message
+     * */
+    private String letter_to_int()
     {
-        string_coded_msg = msg.toUpperCase();
+        String string_coded_msg = msg.toUpperCase();
+        String X_str = "23";
 
         for (int i = 0; i < msg.length(); i++) {
             char letter = msg.charAt(i);
@@ -43,8 +60,34 @@ public class Encoder {
             else {
                 alphabet_num = String.valueOf(letter - 'A');
             }
-            string_coded_msg.replace(String.valueOf(letter), alphabet_num);
+            string_coded_msg = string_coded_msg.replace(String.valueOf(letter), alphabet_num);
         }
+
+        while (string_coded_msg.length() % digits_n != 0) string_coded_msg += X_str;
+
         return string_coded_msg;
+    }
+
+    /**
+     * Takes the alphanumeric code form of the message and performs modular exponentiation to it
+     * in chunks of N digits (the digit size of the public key n).
+     *
+     * @return an array of integers which represent the original msg after encoding
+     * */
+    public long[] encode()
+    {
+        String string_coded_msg = letter_to_int();
+        encoded_msg = new long[string_coded_msg.length()/digits_n];
+        int index = 0;
+        String tmp;
+
+        for (int i = 0; i < string_coded_msg.length(); i++) {
+            if (i % (digits_n-1) == 0) {
+                index += 1;
+                tmp = string_coded_msg.substring((i-(digits_n-1)), i);
+                encoded_msg[index] = Main.mod_exp(Long.parseLong(tmp), public_key_n, public_key_e);
+            }
+        }
+        return encoded_msg;
     }
 }
