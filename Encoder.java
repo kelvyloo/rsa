@@ -3,20 +3,17 @@
  * Takes the message that the user desires be encoded and can encode the message using RSA
  * modular encryption.
  *
- * INSTANCE VARIABLES:
- * Public variables
- * @msg           Message to be encoded
- * @public_key_n  A prime number n such that n = pq
- * @public_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
+ * @msg            Message to be encoded
+ * @public_key_n   A prime number n such that n = pq
+ * @private_key_e  Private key prime number such that the private key d*e = 1 mod (p-1)(q-1)
  *
- * Private variables
- * @digits_n         Length of the public key n
- * @encoded_msg      Final encoded message after encryption
+ * @digits_n      Length of the public key n
+ * @encoded_msg   Final encoded message after encryption
  */
 public class Encoder {
     String msg;
     long public_key_n;
-    long public_key_e;
+    long private_key_e;
 
     private int digits_n = String.valueOf(public_key_n).length();
     private long encoded_msg[];
@@ -26,15 +23,15 @@ public class Encoder {
      *
      * @msg           Message to be encoded
      * @public_key_n  A prime number n such that n = pq
-     * @public_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
+     * @private_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
      *
      * @return        Nothing
      * */
-    public Encoder(String msg, long public_key_n, long public_key_e)
+    public Encoder(String msg, long public_key_n, long private_key_e)
     {
         this.msg = msg;
         this.public_key_n = public_key_n;
-        this.public_key_e = public_key_e;
+        this.private_key_e = private_key_e;
     }
 
     /**
@@ -85,7 +82,7 @@ public class Encoder {
             if (i % (digits_n-1) == 0) {
                 index += 1;
                 tmp = string_coded_msg.substring((i-(digits_n-1)), i);
-                encoded_msg[index] = Main.mod_exp(Long.parseLong(tmp), public_key_n, public_key_e);
+                encoded_msg[index] = Main.mod_exp(Long.parseLong(tmp), public_key_n, private_key_e);
             }
         }
         return encoded_msg;
