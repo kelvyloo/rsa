@@ -45,20 +45,21 @@ public class Encoder {
      * */
     private String letter_to_int()
     {
-        String string_coded_msg = msg.toUpperCase();
+        String tmp_coded_msg = msg.toUpperCase();
+        String string_coded_msg = tmp_coded_msg;
         String X_str = "23";
 
-        for (int i = 0; i < msg.length(); i++) {
-            char letter = msg.charAt(i);
-            String alphabet_num;
+        for (int i = 0; i < tmp_coded_msg.length(); i++) {
+            char letter = tmp_coded_msg.charAt(i);
+            String alpha_num;
 
             if (letter >= 'A' && letter <= 'J') {
-                alphabet_num = "0" + (letter - 'A');
+                alpha_num = "0" + (letter - 'A');
             }
             else {
-                alphabet_num = String.valueOf(letter - 'A');
+                alpha_num = String.valueOf(letter - 'A');
             }
-            string_coded_msg = string_coded_msg.replace(String.valueOf(letter), alphabet_num);
+            string_coded_msg = string_coded_msg.replace(String.valueOf(letter), alpha_num);
         }
 
         while (string_coded_msg.length() % digits_n != 0) string_coded_msg += X_str;
@@ -79,8 +80,10 @@ public class Encoder {
         int index = 0;
         String tmp;
 
+        System.out.println(string_coded_msg);
+
         for (int i = 0; i < string_coded_msg.length(); i++) {
-            if (i % (digits_n-1) == 0) {
+            if (i % (digits_n-1) == 0 && i != 0) {
                 index += 1;
                 tmp = string_coded_msg.substring((i-(digits_n-1)), i);
                 encoded_msg[index] = Main.mod_exp(Long.parseLong(tmp), public_key_n, private_key_e);
