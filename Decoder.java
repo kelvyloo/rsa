@@ -8,7 +8,7 @@ public class Decoder {
      long public_key_n;
      long private_key_d;
 
-     private long digits_n = String.valueOf(public_key_n).length();
+     private long digits_n;
      private String decoded_msg;
 
      /**
@@ -25,6 +25,7 @@ public class Decoder {
          this.encoded_msg = encoded_msg;
          this.public_key_n = public_key_n;
          this.private_key_d = private_key_d;
+         this.digits_n = String.valueOf(public_key_n).length();
      }
 
     /**

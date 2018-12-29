@@ -15,7 +15,7 @@ public class Encoder {
     long public_key_n;
     long private_key_e;
 
-    private int digits_n = String.valueOf(public_key_n).length();
+    private int digits_n;
     private long encoded_msg[];
 
     /**
@@ -32,6 +32,7 @@ public class Encoder {
         this.msg = msg;
         this.public_key_n = public_key_n;
         this.private_key_e = private_key_e;
+        this.digits_n = String.valueOf(public_key_n).length();
     }
 
     /**
