@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -10,9 +11,9 @@ public class Main {
      * The product of those successive modular operations is the answer;
      *
      *
-     * @base  Base
-     * @mod   Modulo
-     * @exp   Exponent
+     * @param base  Base
+     * @param mod   Modulo
+     * @param exp   Exponent
      *
      * @return b^e mod m
      * */
@@ -40,26 +41,25 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        long b, m, n, x;
+        String secret_msg;
+        long public_key, private_key;
         long encoded_msg[];
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("This is a simple encoder!");
 
-        System.out.printf("Please enter a number b: ");
-        b = scanner.nextLong();
+        System.out.printf("Please enter your secret message: ");
+        secret_msg = scanner.nextLine();
 
-        System.out.printf("Please enter a number m: ");
-        m = scanner.nextLong();
+        System.out.printf("Please enter the public key n: ");
+        public_key = scanner.nextLong();
 
-        System.out.printf("Please enter a number n: ");
-        n = scanner.nextLong();
+        System.out.printf("Please enter your private key e: ");
+        private_key = scanner.nextLong();
 
-        x = Main.mod_exp(b, m ,n);
-
-        Encoder encoder = new Encoder("Hello", 362783, 19);
+        Encoder encoder = new Encoder(secret_msg, public_key, private_key);
         encoded_msg = encoder.encode();
 
-        System.out.printf("%d^%d %% %d = %d", b, n, m, x);
+        System.out.println(Arrays.toString(encoded_msg));
     }
 }
