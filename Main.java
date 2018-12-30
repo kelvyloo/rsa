@@ -8,7 +8,7 @@ public class Main {
      * (i.e. 117 = 1110101).
      * Starting from the LSB if the bit is 1 then calculate base^bit_power mod m
      * (i.e 5^1 mod 19, 5^2 mod 19, 5^4 mod 19, etc.)
-     * The product of those successive modular operations is the answer;
+     * The product of those successive modular operations is the answer.
      *
      *
      * @param base  Base
@@ -31,7 +31,7 @@ public class Main {
         power = base % mod;
 
         for (int i = 0; i < n_binary.length(); i++) {
-            if (n_binary.charAt(i) == 1) {
+            if (n_binary.charAt(i) == '1') {
                 x = (x * power) % mod;
             }
             power = power * power % mod;
@@ -44,6 +44,8 @@ public class Main {
         String secret_msg;
         long public_key, private_key;
         long encoded_msg[];
+        char response;
+        String decoded_msg;
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("This is a simple encoder!");
@@ -61,5 +63,22 @@ public class Main {
         encoded_msg = encoder.encode();
 
         System.out.println(Arrays.toString(encoded_msg));
+
+        System.out.printf("Would you like to decode the message (y/n)?: ");
+        response = scanner.next().charAt(0);
+
+        if (response != 'y') {
+            System.out.println("Goodbye!");
+        }
+        else {
+            System.out.printf("Please enter your private key d: ");
+            private_key = scanner.nextLong();
+
+            Decoder decoder = new Decoder(encoded_msg, public_key, private_key);
+            decoded_msg = decoder.decode();
+
+            System.out.println(decoded_msg);
+        }
+
     }
 }
