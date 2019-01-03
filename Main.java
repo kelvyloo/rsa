@@ -24,7 +24,7 @@ public class Main {
 
         while(exp > 0) {
             long tmp = exp % 2;
-            n_binary = tmp + n_binary;
+            n_binary = n_binary + tmp;
             exp /= 2;
         }
 
