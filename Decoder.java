@@ -51,7 +51,6 @@ public class Decoder {
              if (String.valueOf(block).length() != digits_n) {
                  block_str = "0" + block_str;
              }
-             System.out.println(block_str);
              tmp_msg += block_str;
          }
 
