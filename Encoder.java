@@ -21,9 +21,9 @@ public class Encoder {
     /**
      * Class Constructor
      *
-     * @msg           Message to be encoded
-     * @public_key_n  A prime number n such that n = pq
-     * @private_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
+     * @param msg           Message to be encoded
+     * @param public_key_n  A prime number n such that n = pq
+     * @param private_key_e  Another prime number such that the private key d*e = 1 mod (p-1)(q-1)
      *
      * @return        Nothing
      * */
@@ -80,7 +80,7 @@ public class Encoder {
         int index = 0;
         String tmp;
 
-        for (int i = 0; i < string_coded_msg.length(); i++) {
+        for (int i = 0; i <= string_coded_msg.length(); i++) {
             if (i % (digits_n) == 0 && i != 0) {
                 tmp = string_coded_msg.substring((i-(digits_n)), i);
                 encoded_msg[index] = Main.mod_exp(Long.parseLong(tmp), public_key_n, private_key_e);
