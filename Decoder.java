@@ -9,7 +9,7 @@ public class Decoder {
      long private_key_d;
 
      private long digits_n;
-     private String decoded_msg;
+     private String decoded_msg = "";
 
      /**
       * Class constructor
@@ -51,12 +51,13 @@ public class Decoder {
              if (String.valueOf(block).length() != digits_n) {
                  block_str = "0" + block_str;
              }
+             System.out.println(block_str);
              tmp_msg += block_str;
          }
 
-         for (int i = 0; i < tmp_msg.length(); i++) {
-             if (i % 2 == 1) {
-                 alphanumeric = tmp_msg.substring(i-1, i);
+         for (int i = 0; i <= tmp_msg.length(); i++) {
+             if (i % 2 == 0 && i != 0) {
+                 alphanumeric = tmp_msg.substring(i-2, i);
                  letter = (char) (Integer.valueOf(alphanumeric) + 'A');
                  decoded_msg += letter;
              }
