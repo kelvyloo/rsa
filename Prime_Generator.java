@@ -69,19 +69,27 @@ public class Prime_Generator {
         }
 
         for (int witness : witnesses) {
+            boolean passed_witness;
             long tmp;
 
             tmp = Main.mod_exp(witness, potential_prime, d);
 
-            if (tmp != 1 && tmp != potential_prime-1) { break; }
+            if (tmp == 1 || tmp == potential_prime-1) { continue; }
 
-            for (int j = 0; j < r; j++) {
+            passed_witness = false;
+
+            for (int j = 0; j < r; j++)
+            {
                 tmp = tmp * tmp % potential_prime;
 
                 if (tmp == 1) { return false; }
 
-                else if (tmp == potential_prime-1) { break; }
+                else if (tmp == potential_prime - 1) {
+                    passed_witness = true;
+                    break;
+                }
             }
+            if (!passed_witness) { return false; }
         }
 
         return true;
@@ -99,9 +107,13 @@ public class Prime_Generator {
         this.digits_n = digits_n;
         this.is_prime = false;
 
+        long n = 0;
+
         while (!is_prime) {
-            prime_num = number_gen();
-            is_prime = miller_rabin(prime_num);
+            n = number_gen();
+            is_prime = miller_rabin(n);
         }
+
+        this.prime_num = n;
     }
 }
