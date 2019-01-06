@@ -18,7 +18,6 @@ public class Decoder {
       * @param public_key_n  public key prime number known by both users
       * @param private_key_d private key that only recipient should know
       *
-      * @return None
       */
      public Decoder(long[] encoded_msg, long public_key_n, long private_key_d)
      {
@@ -33,7 +32,6 @@ public class Decoder {
      * iterating through the new blocks of numbers and finding the alphanumeric
      * representation of each letter from the original message
      *
-     * @return the decoded string
      */
      public String decode()
      {
