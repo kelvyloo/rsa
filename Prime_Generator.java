@@ -21,7 +21,13 @@ public class Prime_Generator {
         String num_str = "";
 
         for (int i = 0; i < digits_n; i++) {
-            num_str += String.valueOf(digit.nextInt(9));
+            int rand_digit;
+
+            rand_digit = digit.nextInt(9);
+            if (i == 0) {
+                while (rand_digit == 0) { rand_digit = digit.nextInt(9); }
+            }
+            num_str += String.valueOf(rand_digit);
         }
         char last_digit = num_str.charAt(digits_n - 1);
 
