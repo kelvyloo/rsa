@@ -25,7 +25,6 @@ public class Decoder {
          this.public_key_n = public_key_n;
          this.private_key_d = private_key_d;
          this.digits_n = String.valueOf(public_key_n).length();
-
      }
 
     /**
